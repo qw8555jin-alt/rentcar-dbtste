@@ -1,0 +1,134 @@
+.calculator {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  max-width: 600px;
+  margin: -40px auto 40px;
+  position: relative;
+  z-index: 10;
+}
+
+.title {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.tabs {
+  display: flex;
+  background: #e2e8f0;
+  border-radius: 8px;
+  padding: 4px;
+  margin-bottom: 24px;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 6px;
+  font-weight: 600;
+  color: #64748b;
+  transition: all 0.2s;
+}
+
+.activeTab {
+  background: white;
+  color: var(--primary);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.formGroup {
+  margin-bottom: 24px;
+}
+
+.label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+.select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: var(--text-base);
+  background: white;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 10px;
+}
+
+.optionBtn {
+  flex: 1;
+  padding: 12px 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: white;
+  transition: all 0.2s;
+}
+
+.activeOption {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: white;
+}
+
+.range {
+  width: 100%;
+  accent-color: var(--primary);
+}
+
+.resultBox {
+  background: #f1f5f9;
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.resultLabel {
+  font-size: var(--text-sm);
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.resultValue {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.resultValue span {
+  font-size: var(--text-base);
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.resultNotice {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 12px;
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 16px;
+  background: var(--secondary);
+  color: white;
+  font-size: var(--text-lg);
+  font-weight: 700;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.submitBtn:hover {
+  background: #059669;
+}
