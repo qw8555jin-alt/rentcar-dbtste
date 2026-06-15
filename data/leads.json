@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "id": "1781429508013",
+    "name": "권용진",
+    "phone": "01037969592",
+    "car": "제네시스 g90",
+    "method": "장기렌트",
+    "time": "즉시",
+    "createdAt": "2026-06-14T09:31:48.013Z",
+    "missedCalls": 1,
+    "isContacted": false
+  },
+  {
+    "id": "1781429468420",
+    "name": "test",
+    "phone": "010-0000-0000",
+    "car": "test",
+    "method": "test",
+    "time": "test",
+    "createdAt": "2026-06-14T09:31:08.420Z"
+  }
+]

@@ -38,30 +38,15 @@ model FinanceLeaseRentRule {
 }
 
 model Lead {
-  id                     Int      @id @default(autoincrement())
-  carId                  Int
-  productClass           String   @db.VarChar(10)
-  termMonths             Int
-  prepayRatio            Decimal  @db.Decimal(3, 2)
-  monthlyPayment         Int
-  
-  // PortOne Verification Info
-  identityVerificationId String   @unique
-  
-  // Encrypted Info (AES-256-GCM)
-  nameEncrypted          String
-  phoneEncrypted         String
-  birthEncrypted         String?
-  genderEncrypted        String?
-
-  utmSource              String?
-  utmMedium              String?
-  utmCampaign            String?
-  utmTerm                String?
-  
-  isConsentChecked       Boolean  @default(false)
-  
-  createdAt              DateTime @default(now())
+  id             String   @id @default(cuid())
+  name           String
+  phone          String
+  car            String
+  method         String
+  time           String
+  isContacted    Boolean  @default(false)
+  missedCalls    Int      @default(0)
+  createdAt      DateTime @default(now())
 
   @@map("leads")
 }
