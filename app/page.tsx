@@ -1,7 +1,9 @@
+import dynamic from 'next/dynamic';
 import HeroSection from '../components/HeroSection';
 import LiveFeed from '../components/LiveFeed';
-import LeadForm from '../components/LeadForm';
 import CarCatalog from '../components/CarCatalog';
+
+const LeadForm = dynamic(() => import('../components/LeadForm'), { ssr: false });
 
 export default function Home() {
   return (

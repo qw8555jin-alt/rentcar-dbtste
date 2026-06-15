@@ -66,6 +66,7 @@ export default function LeadForm({ title = "실시간 최적가 견적 신청" }
       <iframe 
         name={iframeId} 
         id={iframeId} 
+        loading="lazy"
         scrolling="no" 
         frameBorder="0" 
         width="100%" 
