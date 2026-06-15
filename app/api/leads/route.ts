@@ -32,9 +32,9 @@ export async function POST(request: Request) {
     });
     
     return NextResponse.json({ success: true, lead: newLead });
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
-    return NextResponse.json({ error: 'Failed to save lead' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to save lead', details: error.message, stack: error.stack }, { status: 500 });
   }
 }
 
