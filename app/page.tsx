@@ -1,18 +1,12 @@
-import { cookies } from 'next/headers';
 import HeroSection from '../components/HeroSection';
-import CountdownTimer from '../components/CountdownTimer';
 import LiveFeed from '../components/LiveFeed';
 import LeadForm from '../components/LeadForm';
 import CarCatalog from '../components/CarCatalog';
 
-export default async function Home() {
-  const cookieStore = await cookies();
-  const variant = cookieStore.get('ab-test-variant')?.value || 'variant-A';
-
+export default function Home() {
   return (
     <main style={{ paddingBottom: '120px' }}>
-      <HeroSection variant={variant} />
-      <CountdownTimer />
+      <HeroSection />
       
       <div className="container">
         <LeadForm title="🔥 특가 마감 전 빠른 견적 신청" />

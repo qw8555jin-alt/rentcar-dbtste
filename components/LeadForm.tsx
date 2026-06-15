@@ -1,85 +1,75 @@
 "use client";
 
 import styles from './LeadForm.module.css';
-import { useEffect } from 'react';
+import { useEffect, useId } from 'react';
 
 export default function LeadForm({ title = "실시간 최적가 견적 신청" }: { title?: string }) {
+  const rawId = useId().replace(/:/g, '');
+  const iframeId = `ifr_${rawId}`;
+
   useEffect(() => {
     let isMounted = true;
 
-    const loadScript = (src: string) => {
-      return new Promise((resolve, reject) => {
-        if (document.querySelector(`script[src="${src}"]`)) {
-          resolve(true);
-          return;
-        }
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = resolve;
-        script.onerror = reject;
-        document.body.appendChild(script);
-      });
-    };
+    // 여러 폼이 렌더링될 때 스크립트가 중복 로드되지 않도록 고유 ID 부여
+    if (!document.getElementById('replyalba-jquery')) {
+      const script = document.createElement('script');
+      script.id = 'replyalba-jquery';
+      script.src = "https://www.replyalba.com/js/jquery-1.11.0.min.js";
+      document.head.appendChild(script);
+    }
+    
+    if (!document.getElementById('replyalba-resizer')) {
+      const script = document.createElement('script');
+      script.id = 'replyalba-resizer';
+      script.src = "https://www.replyalba.com/js/iframeResizer.min.js";
+      document.head.appendChild(script);
+    }
 
-    const init = async () => {
-      try {
-        await loadScript("https://www.replyalba.com/js/jquery-1.11.0.min.js");
-        await loadScript("https://www.replyalba.com/js/iframeResizer.min.js");
-
+    // 스크립트가 완전히 로드될 때까지 0.1초마다 확인 (레이스 컨디션 방지)
+    const checkInterval = setInterval(() => {
+      // @ts-ignore
+      if (window.$ && window.$(`#${iframeId}`).length && window.$(`#${iframeId}`).iFrameResize) {
+        clearInterval(checkInterval);
         if (!isMounted) return;
-
-        // @ts-ignore
-        if (window.$ && window.$("#ifrCCAl").length && window.$("#ifrCCAl").iFrameResize) {
+        
+        try {
           // @ts-ignore
-          window.$("#ifrCCAl").iFrameResize({
+          window.$(`#${iframeId}`).iFrameResize({
             autoResize: true,
-            bodyBackground: null,
-            bodyMargin: null,
-            bodyMarginV1: 0,
-            bodyPadding: null,
-            checkOrigin: true,
-            enablePublicMethods: false,
-            heightCalculationMethod: "offset",
-            interval: 32,
-            log: false,
-            maxHeight: Infinity,
-            maxWidth: Infinity,
-            minHeight: 800,
-            minWidth: 0,
+            checkOrigin: false,
             scrolling: false,
             sizeHeight: true,
-            sizeWidth: false,
-            tolerance: 0,
-            closedCallback: function () { },
-            initCallback: function () { },
-            messageCallback: function () { },
-            resizedCallback: function () { },
-            callback: function () { return true; }
+            sizeWidth: false
           });
+        } catch (e) {
+          console.error("Iframe resize init error:", e);
         }
-      } catch (err) {
-        console.error("Failed to load iframe resizer scripts", err);
       }
-    };
+    }, 100);
 
-    init();
+    // 10초 후에도 로드가 안 되면 인터벌 종료 (무한 반복 방지)
+    const timeout = setTimeout(() => {
+      clearInterval(checkInterval);
+    }, 10000);
 
     return () => {
       isMounted = false;
+      clearInterval(checkInterval);
+      clearTimeout(timeout);
     };
-  }, []);
+  }, [iframeId]);
 
   return (
-    <div className={styles.formWrapper} style={{ padding: 0, overflow: 'hidden', minHeight: '800px' }}>
+    <div className={styles.formWrapper} style={{ padding: 0, overflow: 'hidden' }}>
       <h2 className={styles.title} style={{ padding: '24px 24px 0' }}>{title}</h2>
       
       <iframe 
-        name="ifrm_icode" 
-        id="ifrCCAl" 
-        scrolling="auto" 
+        name={iframeId} 
+        id={iframeId} 
+        scrolling="no" 
         frameBorder="0" 
         width="100%" 
-        style={{ height: '800px', width: '100%', border: 'none' }}
+        style={{ width: '100%', border: 'none', minHeight: '600px' }}
         src="https://www.replyalba.com/intros/_frm/index.php?code=vYKofXARqq"
       />
     </div>
