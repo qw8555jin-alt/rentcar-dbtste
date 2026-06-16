@@ -1,5 +1,6 @@
 'use client';
 import { useRef, useState, useEffect } from 'react';
+import Image from 'next/image';
 
 export default function TestimonialSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -228,7 +229,7 @@ export default function TestimonialSection() {
           {testimonials.map((item, idx) => (
             <div key={item.id + '_' + idx} className="card-secondary flex-shrink-0 w-[280px] md:w-[340px] flex flex-col overflow-hidden">
               <div className="w-full h-[180px] md:h-[220px] relative bg-slate-200">
-                <img src={item.image} alt={item.regionCar} className="w-full h-full object-cover" />
+                <Image src={item.image} alt={item.regionCar} fill sizes="(max-width: 768px) 280px, 340px" className="object-cover" />
                 <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-[10px] shadow-md border border-blue-100/50 flex items-center gap-1.5">
                   <span className="text-blue-500 text-[13px]">🏷️</span>
                   <span className="text-[13px] font-bold text-slate-800 tracking-tight">

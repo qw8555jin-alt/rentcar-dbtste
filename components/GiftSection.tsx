@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function GiftSection() {
   const gifts = [
     {
@@ -39,8 +41,8 @@ export default function GiftSection() {
           <div className="perks-grid">
             {gifts.map((gift, idx) => (
               <div key={idx} className="perk-card">
-                <div className="perk-image-wrap">
-                  <img src={gift.image} alt={gift.title} className="absolute inset-0 w-full h-full object-cover" />
+                <div className="perk-image-wrap relative">
+                  <Image src={gift.image} alt={gift.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                 </div>
                 <div className="perk-text-wrap">
                   <div className="perk-title">{gift.title}</div>
