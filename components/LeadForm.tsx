@@ -30,7 +30,11 @@ export default function LeadForm() {
           tolerance: 0,
           closedCallback: function () { },
           initCallback: function () { },
-          messageCallback: function () { },
+          messageCallback: function (messageData: any) {
+            // iframe-resizer 자체 메시지 콜백 (혹시 완료 메시지가 여기로 올 경우)
+            console.log("[Iframe Message]", messageData);
+            triggerGoogleConversion();
+          },
           resizedCallback: function () { },
           callback: function () { return true; }
         });
@@ -42,7 +46,37 @@ export default function LeadForm() {
     
     // @ts-ignore
     window.initIframeResize = initIframe;
+
+    // 외부 메시지 감지 우회 스크립트 (ReplyAlba 폼 제출 완료 신호 감지용)
+    const handleMessage = (event: MessageEvent) => {
+      // iFrameSizer 자체 리사이징 메시지는 무시
+      if (typeof event.data === 'string' && event.data.includes('[iFrameSizer]')) return;
+      
+      console.log("외부 아이프레임 통신 감지:", event.data);
+      triggerGoogleConversion();
+    };
+
+    window.addEventListener('message', handleMessage);
+
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
   }, []);
+
+  const triggerGoogleConversion = () => {
+    // 이미 실행되었는지 방지하기 위한 간단한 세션 플래그
+    if (sessionStorage.getItem('conversion_triggered')) return;
+    
+    // @ts-ignore
+    if (typeof window !== "undefined" && window.gtag) {
+      // @ts-ignore
+      window.gtag('event', 'conversion', {
+          'send_to': 'AW-17910158234/81dVCMnwkcAcEJqnndxC'
+      });
+      console.log("구글 전환 태그(AW-17910158234/81dVCMnwkcAcEJqnndxC) 실행 완료!");
+      sessionStorage.setItem('conversion_triggered', 'true');
+    }
+  };
 
   return (
     <div className="w-full" id="lead-form" style={{ padding: 0, minHeight: '600px' }}>
