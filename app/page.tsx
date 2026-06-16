@@ -1,21 +1,20 @@
 import dynamic from 'next/dynamic';
 import HeroSection from '../components/HeroSection';
-import SectionSkeleton from '../components/Skeleton';
+import ConceptSection from '../components/ConceptSection';
+import ComparisonSection from '../components/ComparisonSection';
+import TargetSection from '../components/TargetSection';
+import ProcessSection from '../components/ProcessSection';
+import TestimonialSection from '../components/TestimonialSection';
+import InfoSection from '../components/InfoSection';
+import InstallmentVsRentSection from '../components/InstallmentVsRentSection';
+import GiftSection from '../components/GiftSection';
+import Footer from '../components/Footer';
 
 export const revalidate = 3600; // 1시간마다 ISR 재생성
 
-// 아래 섹션들은 초기 렌더링 속도 향상을 위해 지연 로딩(Lazy Loading) 및 Skeleton 처리합니다.
-const ConceptSection = dynamic(() => import('../components/ConceptSection'), { ssr: true, loading: () => <SectionSkeleton /> });
-const ComparisonSection = dynamic(() => import('../components/ComparisonSection'), { ssr: true, loading: () => <SectionSkeleton /> });
-const TargetSection = dynamic(() => import('../components/TargetSection'), { ssr: true, loading: () => <SectionSkeleton /> });
-const ProcessSection = dynamic(() => import('../components/ProcessSection'), { ssr: true, loading: () => <SectionSkeleton /> });
-const TestimonialSection = dynamic(() => import('../components/TestimonialSection'), { ssr: true, loading: () => <SectionSkeleton /> });
-const InfoSection = dynamic(() => import('../components/InfoSection'), { ssr: true, loading: () => <SectionSkeleton /> });
-const InstallmentVsRentSection = dynamic(() => import('../components/InstallmentVsRentSection'), { ssr: true, loading: () => <SectionSkeleton /> });
-const GiftSection = dynamic(() => import('../components/GiftSection'), { ssr: true, loading: () => <SectionSkeleton /> });
+// 무거운 클라이언트 컴포넌트 및 외부 아이프레임 폼만 지연 로딩(Lazy Loading) 처리합니다.
 const LeadForm = dynamic(() => import('../components/LeadForm'));
 const LiveStatusWidgets = dynamic(() => import('../components/LiveStatusWidgets'));
-const Footer = dynamic(() => import('../components/Footer'), { ssr: true });
 
 export default function Home() {
   return (
